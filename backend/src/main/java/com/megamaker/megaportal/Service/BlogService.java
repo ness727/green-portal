@@ -4,25 +4,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.megamaker.megaportal.Dto.BlogResponseDto;
-import com.megamaker.megaportal.Dto.NewsResponseDto;
-import com.megamaker.megaportal.Dto.NewsAndBlogRequestDto;
+import com.megamaker.megaportal.Dto.NaverApiRequestDto;
 import com.megamaker.megaportal.PropertyConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @Slf4j
 @Service
@@ -30,14 +26,14 @@ import java.util.Locale;
 public class BlogService {
     private final PropertyConfig config;
 
-    public List<BlogResponseDto> searchBlogs(NewsAndBlogRequestDto newsAndBlogRequestDto) {
+    public List<BlogResponseDto> searchBlogs(NaverApiRequestDto naverApiRequestDto) {
         String url = "https://openapi.naver.com/";
         URI uri = UriComponentsBuilder.fromHttpUrl(url)  // 보낼 uri 생성
                 .path("v1/search/blog.json")
-                .queryParam("query", newsAndBlogRequestDto.getQuery())
-                .queryParam("display", newsAndBlogRequestDto.getDisplay())
-                .queryParam("start", newsAndBlogRequestDto.getStart())
-                .queryParam("sort", newsAndBlogRequestDto.getSort())
+                .queryParam("query", naverApiRequestDto.getQuery())
+                .queryParam("display", naverApiRequestDto.getDisplay())
+                .queryParam("start", naverApiRequestDto.getStart())
+                .queryParam("sort", naverApiRequestDto.getSort())
                 .encode()
                 .build()
                 .toUri();

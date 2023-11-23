@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class NewsAndBlogRequestDto {
+public class NaverApiRequestDto {
     String query;
     Integer display;
     Integer start;

@@ -2,7 +2,7 @@ package com.megamaker.megaportal.Controller;
 
 import com.megamaker.megaportal.Dto.BlogResponseDto;
 import com.megamaker.megaportal.Dto.NewsResponseDto;
-import com.megamaker.megaportal.Dto.NewsAndBlogRequestDto;
+import com.megamaker.megaportal.Dto.NaverApiRequestDto;
 import com.megamaker.megaportal.Service.BlogService;
 import com.megamaker.megaportal.Service.NewsService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class SearchController {
     @GetMapping("/blog")
     public List<BlogResponseDto> searchBlogs(@RequestParam String query, @RequestParam Integer start) {
         log.debug("블로그 데이터 보내줌" + " & " + query + ", " + start);
-        return blogService.searchBlogs(NewsAndBlogRequestDto.builder()
+        return blogService.searchBlogs(NaverApiRequestDto.builder()
                 .query(query)
                 .display(10)
                 .start(start * 10)
@@ -32,7 +32,7 @@ public class SearchController {
     @GetMapping("/news")
     public List<NewsResponseDto> searchNews(@RequestParam String query, @RequestParam Integer start) {
         log.debug("뉴스 데이터 보내줌" + " & " + query + ", " + start);
-        return newsService.searchNews(NewsAndBlogRequestDto.builder()
+        return newsService.searchNews(NaverApiRequestDto.builder()
                 .query(query)
                 .display(10)
                 .start(start * 10)

@@ -4,11 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.megamaker.megaportal.Dto.NewsResponseDto;
-import com.megamaker.megaportal.Dto.NewsAndBlogRequestDto;
+import com.megamaker.megaportal.Dto.NaverApiRequestDto;
 import com.megamaker.megaportal.PropertyConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -28,14 +27,14 @@ import java.util.Locale;
 public class NewsService {
     private final PropertyConfig config;
 
-    public List<NewsResponseDto> searchNews(NewsAndBlogRequestDto newsAndBlogRequestDto) {
+    public List<NewsResponseDto> searchNews(NaverApiRequestDto naverApiRequestDto) {
         String url = "https://openapi.naver.com/";
         URI uri = UriComponentsBuilder.fromHttpUrl(url)  // 보낼 uri 생성
                 .path("v1/search/news.json")
-                .queryParam("query", newsAndBlogRequestDto.getQuery())
-                .queryParam("display", newsAndBlogRequestDto.getDisplay())
-                .queryParam("start", newsAndBlogRequestDto.getStart())
-                .queryParam("sort", newsAndBlogRequestDto.getSort())
+                .queryParam("query", naverApiRequestDto.getQuery())
+                .queryParam("display", naverApiRequestDto.getDisplay())
+                .queryParam("start", naverApiRequestDto.getStart())
+                .queryParam("sort", naverApiRequestDto.getSort())
                 .encode()
                 .build()
                 .toUri();
