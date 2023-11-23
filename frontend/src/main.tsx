@@ -17,6 +17,12 @@ export interface Blog {
   postdate: string ;
 }
 
+export interface Image {
+  title: string, 
+  thumbnail: string,
+  link: string;
+}
+
 export interface News {
   title: string, 
   originallink: string, 
@@ -33,9 +39,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="flex justify-end py-5 my-toggle">
-        <ModeToggle />
-      </div>
+        <div className="flex justify-end py-5 my-toggle">
+          <ModeToggle />
+        </div>
         <App />
       </ThemeProvider>
     </Provider>

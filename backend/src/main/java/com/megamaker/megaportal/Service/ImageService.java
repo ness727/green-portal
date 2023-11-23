@@ -3,7 +3,7 @@ package com.megamaker.megaportal.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.megamaker.megaportal.Dto.BlogResponseDto;
+import com.megamaker.megaportal.Dto.ImageResponseDto;
 import com.megamaker.megaportal.Dto.NaverApiRequestDto;
 import com.megamaker.megaportal.PropertyConfig;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +23,13 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class BlogService {
+public class ImageService {
     private final PropertyConfig config;
 
-    public List<BlogResponseDto> searchBlogs(NaverApiRequestDto naverApiRequestDto) {
+    public List<ImageResponseDto> searchImages(NaverApiRequestDto naverApiRequestDto) {
         String url = "https://openapi.naver.com/";
         URI uri = UriComponentsBuilder.fromHttpUrl(url)  // 보낼 uri 생성
-                .path("v1/search/blog.json")
+                .path("v1/search/image")
                 .queryParam("query", naverApiRequestDto.getQuery())
                 .queryParam("display", naverApiRequestDto.getDisplay())
                 .queryParam("start", naverApiRequestDto.getStart())
@@ -40,8 +40,6 @@ public class BlogService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-
-
         RequestEntity<Void> request = RequestEntity.get(uri)  // 네이버 API에 필요한 헤더 정보 추가
                 .header("X-Naver-Client-Id", config.getNaverId())
                 .header("X-Naver-Client-Secret", config.getNaverSecret())
@@ -51,34 +49,17 @@ public class BlogService {
         String resultBody = result.getBody();  // body 내용 가져옴
 
         ObjectMapper mapper = new ObjectMapper();  // json으로 변환하기 위해 사용
-        List<BlogResponseDto> blogDtoList = new ArrayList<>();  // 처리된 결과를 저장하여 보내질 리스트 생성
+        List<ImageResponseDto> imageDtoList = new ArrayList<>();  // 처리된 결과를 저장하여 보내질 리스트 생성
         try {
             JsonNode root = mapper.readTree(resultBody);
             JsonNode itemsNodes = root.get("items");
 
             for (JsonNode node : itemsNodes) {
-                String dateResult = "";
-                try {
-                    // 날짜를 Date로 변환
-                    String strDate = node.get("postdate").asText();
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-                    Date date = sdf.parse(strDate);
-
-                    // 변환한 Date로 다시 형식에 맞춰 String으로 변환
-                    SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
-                    dateResult = outputFormat.format(date);
-                } catch (Exception e) {
-                    log.error("날짜 변환 실패");
-                    e.printStackTrace();
-                }
-
-                blogDtoList.add(  // 보낼 블로그 리스트에 새로 추가
-                        BlogResponseDto.builder()
+                imageDtoList.add(  // 보낼 이미지 리스트에 새로 추가
+                        ImageResponseDto.builder()
                                 .title(node.get("title").asText())
+                                .thumbnail(node.get("thumbnail").asText())
                                 .link(node.get("link").asText())
-                                .description(node.get("description").asText())
-                                .bloggername(node.get("bloggername").asText())
-                                .postdate(dateResult)
                                 .build()
                 );
             }
@@ -86,6 +67,6 @@ public class BlogService {
             log.error("Json 변환 오류");
         }
 
-        return blogDtoList;
+        return imageDtoList;
     }
 }
