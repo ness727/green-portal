@@ -89,9 +89,8 @@
     color: #03c75a !important;
   }
   .my-card {
-    max-width: 900px;
-    width: 100%;
-    margin: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     cursor: pointer;
   }
 }
@@ -105,10 +104,9 @@
 }
 
 .my-toggle {
-  position: absolute;
+  margin-right: 5%;
 }
 
-.search-container {
-  max-width: 800px;
-  min-width: 800px;
+#root {
+  width: 100%;
 }

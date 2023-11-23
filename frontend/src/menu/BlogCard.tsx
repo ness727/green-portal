@@ -20,7 +20,7 @@ const NewsCard = () =>{
     return (
         <div>
             {blog && blog.map((item) => (
-                <Card key={item.link} className="mt-4 my-card">
+                <Card key={item.link} className="my-card">
                     <div onClick={() => goToBlog(item.link)}>
                         <CardHeader>
                             <CardTitle><div dangerouslySetInnerHTML={{ __html: item.title }}></div></CardTitle>

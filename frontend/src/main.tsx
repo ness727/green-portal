@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import './index.css'
 import "../app/globals.css"
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import rootReducer from './modules/index.ts'
 import { StrictMode } from 'react';
 import { ThemeProvider } from "@/components/theme-provider"
+import { ModeToggle } from './components/mode-toggle';
 
 export interface Blog {
   title: string, 
@@ -33,6 +33,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <div className="flex justify-end py-5 my-toggle">
+        <ModeToggle />
+      </div>
         <App />
       </ThemeProvider>
     </Provider>
