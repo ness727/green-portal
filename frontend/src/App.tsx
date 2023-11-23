@@ -86,8 +86,6 @@ export default function App() {
                           }
                           else {
                             setMenu(menus.none);
-                            // 각 뉴스, 블로그 비우기
-                            // 제목 눌렀을 때 검색 비우고 홈으로
                           }
                           dispatch(resetPage());
                         }}/>
