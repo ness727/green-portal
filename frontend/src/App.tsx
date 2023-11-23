@@ -4,34 +4,29 @@ import { Button } from "@/components/ui/button"
 import { useDispatch } from "react-redux";
 import NewsCard from './menu/NewsCard';
 import BlogCard from './menu/BlogCard';
+import ImageCard from './menu/ImageCard';
 import { useState, useEffect } from 'react';
 import { setNews } from '@/modules/newsModule';
 import { setBlog } from '@/modules/blogModule';
 import { resetPage } from '@/modules/pageModule';
-import { News } from './main';
-import { Blog } from './main';
+import { News, Blog, Image  } from './main';
 
 import { ButtonIcon } from './ButtonIcon';
 import { useSelector } from 'react-redux';
 import { RootState } from './modules';
+import { setImage } from './modules/imageModule';
 
 export default function App() {
   const dispatch = useDispatch();
-  const newsList : News[] = useSelector( (state: RootState) => state.newsReducer.data );
   const blogList : Blog[] = useSelector( (state: RootState) => state.blogReducer.data );
+  const imageList : Image[] = useSelector( (state: RootState) => state.imageReducer.data );
+  const newsList : News[] = useSelector( (state: RootState) => state.newsReducer.data );
   const page : number = useSelector( (state: RootState) => state.pageReducer.page );
 
   const [searchText, setSearchText] = useState('');
   const menus = { 'none': 0 , 'blog': 1, 'image': 2, 'news': 3 }
   const [menu, setMenu] = useState(menus.none);
 
-  const searchNews = () => {
-    if (searchText) {
-      axios.get('/api/search/news', { params: {query: searchText, start: page}})
-      .then((response: AxiosResponse<News[]>) => dispatch(setNews(response.data)))
-      .catch(error => console.log(error));
-    }
-  }
   const searchBlog = () => {
     if (searchText) {
       axios.get('/api/search/blog', { params: {query: searchText, start: page}})
@@ -39,17 +34,32 @@ export default function App() {
       .catch(error => console.log(error));
     }
   }
+  const searchImage = () => {
+    if (searchText) {
+      axios.get('/api/search/image', { params: {query: searchText, start: page}})
+      .then((response: AxiosResponse<Image[]>) => dispatch(setImage(response.data)))
+      .catch(error => console.log(error));
+    }
+  }
+  const searchNews = () => {
+    if (searchText) {
+      axios.get('/api/search/news', { params: {query: searchText, start: page}})
+      .then((response: AxiosResponse<News[]>) => dispatch(setNews(response.data)))
+      .catch(error => console.log(error));
+    }
+  }
+
 
   useEffect(() => {
     switch (menu) {
       case menus.blog:
         searchBlog();
         break;
+      case menus.image:
+        searchImage();
+        break;
       case menus.news:
         searchNews();
-        break;
-      case menus.image:
-
         break;
     }
   }, [page, menu]);
@@ -138,6 +148,7 @@ export default function App() {
             <div className="Header my-card">
             {
               (menu == menus.blog) ? <BlogCard />
+              : (menu == menus.image) ? <ImageCard />
               : (menu == menus.news) ? <NewsCard />
               : ''
             }
@@ -145,6 +156,7 @@ export default function App() {
 
             {(menu == menus.blog && blogList.length > 0) 
               || (menu == menus.news && newsList.length > 0)
+              || (menu == menus.image && imageList.length > 0)
               ? <ButtonIcon /> : ''}
           </div>
         </div>

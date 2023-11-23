@@ -10,7 +10,7 @@ import {
   } from "@/components/ui/card"
 import { useDispatch, useSelector } from "react-redux";
 
-const NewsCard = () =>{
+const BlogCard = () =>{
     const blog : Blog[] = useSelector( (state: RootState) => state.blogReducer.data );
 
     const goToBlog = (link : string) => {
@@ -38,4 +38,4 @@ const NewsCard = () =>{
         </div>
     )
 }
-export default NewsCard;
+export default BlogCard;
