@@ -1,10 +1,10 @@
-package com.megamaker.megaportal.Service;
+package com.megamaker.megaportal.Service.search;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.megamaker.megaportal.Dto.ImageResponseDto;
-import com.megamaker.megaportal.Dto.NaverApiRequestDto;
+import com.megamaker.megaportal.Dto.search.NewsResponseDto;
+import com.megamaker.megaportal.Dto.search.NaverApiRequestDto;
 import com.megamaker.megaportal.PropertyConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,17 +19,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ImageService {
+public class NewsService {
     private final PropertyConfig config;
 
-    public List<ImageResponseDto> searchImages(NaverApiRequestDto naverApiRequestDto) {
+    public List<NewsResponseDto> searchNews(NaverApiRequestDto naverApiRequestDto) {
         String url = "https://openapi.naver.com/";
         URI uri = UriComponentsBuilder.fromHttpUrl(url)  // 보낼 uri 생성
-                .path("v1/search/image")
+                .path("v1/search/news.json")
                 .queryParam("query", naverApiRequestDto.getQuery())
                 .queryParam("display", naverApiRequestDto.getDisplay())
                 .queryParam("start", naverApiRequestDto.getStart())
@@ -44,22 +45,38 @@ public class ImageService {
                 .header("X-Naver-Client-Id", config.getNaverId())
                 .header("X-Naver-Client-Secret", config.getNaverSecret())
                 .build();
-
+        
         ResponseEntity<String> result = restTemplate.exchange(request, String.class);  // 결과를 String으로 받음
         String resultBody = result.getBody();  // body 내용 가져옴
-
+        log.error(resultBody);
         ObjectMapper mapper = new ObjectMapper();  // json으로 변환하기 위해 사용
-        List<ImageResponseDto> imageDtoList = new ArrayList<>();  // 처리된 결과를 저장하여 보내질 리스트 생성
+        List<NewsResponseDto> newsDtoList = new ArrayList<NewsResponseDto>();  // 처리된 결과를 저장하여 보내질 리스트 생성
         try {
             JsonNode root = mapper.readTree(resultBody);
             JsonNode itemsNodes = root.get("items");
 
             for (JsonNode node : itemsNodes) {
-                imageDtoList.add(  // 보낼 이미지 리스트에 새로 추가
-                        ImageResponseDto.builder()
+                String dateResult = "";
+                try {
+                    // 날짜를 Date로 변환
+                    String strDate = node.get("pubDate").asText();
+                    SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+                    Date date = sdf.parse(strDate);
+
+                    // 변환한 Date로 다시 형식에 맞춰 String으로 변환
+                    SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
+                    dateResult = outputFormat.format(date);
+                } catch (Exception e) {
+                    log.error("날짜 변환 실패");
+                    e.printStackTrace();
+                }
+
+                newsDtoList.add(  // 보낼 뉴스 리스트에 새로 추가
+                        NewsResponseDto.builder()
                                 .title(node.get("title").asText())
-                                .thumbnail(node.get("thumbnail").asText())
-                                .link(node.get("link").asText())
+                                .originallink(node.get("originallink").asText())
+                                .description(node.get("description").asText())
+                                .pubDate(dateResult)
                                 .build()
                 );
             }
@@ -67,6 +84,6 @@ public class ImageService {
             log.error("Json 변환 오류");
         }
 
-        return imageDtoList;
+        return newsDtoList;
     }
 }

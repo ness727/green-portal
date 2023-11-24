@@ -2,16 +2,16 @@ import axios, { AxiosResponse } from 'axios';
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useDispatch } from "react-redux";
-import NewsCard from './menu/NewsCard';
-import BlogCard from './menu/BlogCard';
-import ImageCard from './menu/ImageCard';
+import NewsCard from './components/menu/NewsCard';
+import BlogCard from './components/menu/BlogCard';
+import ImageCard from './components/menu/ImageCard';
 import { useState, useEffect } from 'react';
 import { setNews } from '@/modules/newsModule';
 import { setBlog } from '@/modules/blogModule';
 import { resetPage } from '@/modules/pageModule';
 import { News, Blog, Image  } from './main';
-
-import { ButtonIcon } from './ButtonIcon';
+import { FormEvent } from 'react';
+import { PageButtonIcon } from './components/PageButtonIcon';
 import { useSelector } from 'react-redux';
 import { RootState } from './modules';
 import { setImage } from './modules/imageModule';
@@ -49,7 +49,6 @@ export default function App() {
     }
   }
 
-
   useEffect(() => {
     switch (menu) {
       case menus.blog:
@@ -68,6 +67,11 @@ export default function App() {
     dispatch(resetPage());
   }, [menu]);
 
+  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault(); // 페이지 새로고침 방지
+    setMenu(menus.blog);
+  };
+
   return (
     <div>
       <div className="relative">
@@ -83,7 +87,7 @@ export default function App() {
                 </h3>
               </div>
               <div className="mt-7 sm:mt-12 mx-auto max-w-xl relative">
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="relative z-10 flex space-x-3 p-3 bg-white border rounded-lg shadow-lg shadow-gray-100 dark:bg-slate-900 dark:border-gray-700 dark:shadow-gray-900/[.2]">
                     <div className="flex-[1_0_0%]">
                       <Input value={searchText} onChange={e => setSearchText(e.target.value)} type="text" name="hs-search-article-1" id="hs-search-article-1" className="py-2.5 px-4 block w-full border-transparent rounded-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600" placeholder="여기에 입력하세요"/>
@@ -142,6 +146,7 @@ export default function App() {
                   </svg>
                   뉴스
                 </a>
+                
               </div>
               : ''
             }
@@ -157,7 +162,7 @@ export default function App() {
             {(menu == menus.blog && blogList.length > 0) 
               || (menu == menus.news && newsList.length > 0)
               || (menu == menus.image && imageList.length > 0)
-              ? <ButtonIcon /> : ''}
+              ? <PageButtonIcon /> : ''}
           </div>
         </div>
       </div>

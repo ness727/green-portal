@@ -1,4 +1,4 @@
-package com.megamaker.megaportal.Dto;
+package com.megamaker.megaportal.Dto.search;
 
 import lombok.Builder;
 import lombok.Data;

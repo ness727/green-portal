@@ -1,10 +1,10 @@
-package com.megamaker.megaportal.Service;
+package com.megamaker.megaportal.Service.search;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.megamaker.megaportal.Dto.BlogResponseDto;
-import com.megamaker.megaportal.Dto.NaverApiRequestDto;
+import com.megamaker.megaportal.Dto.search.BlogResponseDto;
+import com.megamaker.megaportal.Dto.search.NaverApiRequestDto;
 import com.megamaker.megaportal.PropertyConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

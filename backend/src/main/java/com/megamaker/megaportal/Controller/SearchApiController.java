@@ -1,12 +1,12 @@
 package com.megamaker.megaportal.Controller;
 
-import com.megamaker.megaportal.Dto.BlogResponseDto;
-import com.megamaker.megaportal.Dto.ImageResponseDto;
-import com.megamaker.megaportal.Dto.NewsResponseDto;
-import com.megamaker.megaportal.Dto.NaverApiRequestDto;
-import com.megamaker.megaportal.Service.BlogService;
-import com.megamaker.megaportal.Service.ImageService;
-import com.megamaker.megaportal.Service.NewsService;
+import com.megamaker.megaportal.Dto.search.BlogResponseDto;
+import com.megamaker.megaportal.Dto.search.ImageResponseDto;
+import com.megamaker.megaportal.Dto.search.NewsResponseDto;
+import com.megamaker.megaportal.Dto.search.NaverApiRequestDto;
+import com.megamaker.megaportal.Service.search.BlogService;
+import com.megamaker.megaportal.Service.search.ImageService;
+import com.megamaker.megaportal.Service.search.NewsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/search")
-public class NaverApiController {
+public class SearchApiController {
     private final NewsService newsService;
     private final BlogService blogService;
     private final ImageService imageService;

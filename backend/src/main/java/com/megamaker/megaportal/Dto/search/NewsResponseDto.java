@@ -1,4 +1,4 @@
-package com.megamaker.megaportal.Dto;
+package com.megamaker.megaportal.Dto.search;
 
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class NewsResponseDto {
     String title;
-    String originalLink;
+    String originallink;
     String description;
     String pubDate;
 }

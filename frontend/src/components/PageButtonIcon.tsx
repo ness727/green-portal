@@ -3,11 +3,11 @@ import { ChevronLeft } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "./modules";
+import { RootState } from "../modules";
 import { addPage } from '@/modules/pageModule';
 import { subPage } from '@/modules/pageModule';
 
-export function ButtonIcon() {
+export function PageButtonIcon() {
   const dispatch = useDispatch();
   const page : number = useSelector( (state: RootState) => state.pageReducer.page );
 
