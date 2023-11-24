@@ -1,4 +1,4 @@
-import { ModeToggle } from "../mode-toggle";
+import { ModeToggle } from "./ModeToggle";
 import PapagoModal from "./PapagoModal";
 
 export default function NavBar() {

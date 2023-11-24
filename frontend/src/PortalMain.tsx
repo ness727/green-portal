@@ -2,9 +2,9 @@ import axios, { AxiosResponse } from 'axios';
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useDispatch } from "react-redux";
-import NewsCard from './components/menu/NewsCard';
-import BlogCard from './components/menu/BlogCard';
-import ImageCard from './components/menu/ImageCard';
+import NewsCard from './components/cards/NewsCard';
+import BlogCard from './components/cards/BlogCard';
+import ImageCard from './components/cards/ImageCard';
 import { useState, useEffect } from 'react';
 import { setNews } from '@/modules/newsModule';
 import { setBlog } from '@/modules/blogModule';
@@ -146,7 +146,6 @@ export default function App() {
                   </svg>
                   뉴스
                 </a>
-                
               </div>
               : ''
             }
