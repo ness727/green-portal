@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 
-export default function Papago() {
+export default function PapagoModal() {
   const [open, setOpen] = useState(false)
   const cancelButtonRef = useRef(null)
   const [myTxt, setMyTxt] = useState('')
@@ -84,7 +84,7 @@ export default function Papago() {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-900 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-900 text-left shadow-xl transition-all sm:my-8 sm:w-3/4 sm:max-w-2xl">
                   <div className="bg-white dark:bg-gray-900 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                     <div className="">
                       <div className="mx-auto flex justify-between h-12 flex-shrink-0 rounded-full sm:mx-0 sm:h-10 mb-4">
@@ -130,16 +130,16 @@ export default function Papago() {
                     </div>
                   </div>
                   <div className="bg-gray-50 dark:bg-gray-800 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                    <Button className="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto">
-                      <div onClick={() => translate()}>
-                        번역하기
-                      </div>
-                    </Button>
-                    <Button className="mt-3 inline-flex w-full justify-center rounded-md bg-white dark:bg-gray-700 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 sm:mt-0 sm:w-auto">
-                      <div onClick={() => {setOpen(false); setLangCode('en'); setTranslatedTxt('');}} ref={cancelButtonRef}>
-                        취소
-                      </div>
-                    </Button>
+                    <div onClick={() => translate()}>
+                      <Button className="inline-flex w-full justify-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto">
+                          번역하기
+                      </Button>
+                    </div>
+                    <div onClick={() => {setOpen(false); setLangCode('en'); setTranslatedTxt('');}} ref={cancelButtonRef}>
+                      <Button className="mt-3 inline-flex w-full justify-center rounded-md bg-white dark:bg-gray-700 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 sm:mt-0 sm:w-auto">
+                          취소
+                      </Button>
+                    </div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

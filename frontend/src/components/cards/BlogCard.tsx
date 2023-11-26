@@ -18,7 +18,7 @@ const BlogCard = () =>{
       }
 
     return (
-        <div>
+        <div className="sm:w-3/4">
             {blog && blog.map((item) => (
                 <Card key={item.link} className="my-card">
                     <div onClick={() => goToBlog(item.link)}>

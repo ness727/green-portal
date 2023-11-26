@@ -40,8 +40,6 @@ public class BlogService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-
-
         RequestEntity<Void> request = RequestEntity.get(uri)  // 네이버 API에 필요한 헤더 정보 추가
                 .header("X-Naver-Client-Id", config.getNaverId())
                 .header("X-Naver-Client-Secret", config.getNaverSecret())

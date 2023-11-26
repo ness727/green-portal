@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PapagoApiController {
     private final PapagoService papagoService;
-    @ResponseBody
+
     @PostMapping("/api/papago")
     public String translate(@RequestBody PapagoRequestDto translateRequest) {
         log.debug("번역 데이터 보내줌");

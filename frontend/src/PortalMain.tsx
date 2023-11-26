@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './modules';
 import { setImage } from './modules/imageModule';
 
-export default function App() {
+export default function PortalMain() {
   const dispatch = useDispatch();
   const blogList : Blog[] = useSelector( (state: RootState) => state.blogReducer.data );
   const imageList : Image[] = useSelector( (state: RootState) => state.imageReducer.data );
@@ -149,7 +149,7 @@ export default function App() {
               </div>
               : ''
             }
-            <div className="Header my-card">
+            <div className="Header my-card flex justify-center">
             {
               (menu == menus.blog) ? <BlogCard />
               : (menu == menus.image) ? <ImageCard />
